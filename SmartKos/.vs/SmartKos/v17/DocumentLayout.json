@@ -1,0 +1,179 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|c:\\users\\user\\documents\\smartkos\\smartkos\\view\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:view\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:view\\formlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:view\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:view\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\koneksi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:controller\\koneksi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\model\\m_kamar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:model\\m_kamar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\lib\\excelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:lib\\excelservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\kamar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:controller\\kamar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DB6AFBD4-068D-449C-B3E1-2644C8CB703A}|SmartKos.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormDashboard.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormDashboard.cs",
+              "RelativeDocumentMoniker": "view\\FormDashboard.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormDashboard.cs",
+              "RelativeToolTip": "view\\FormDashboard.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAqwBEAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T05:04:36.941Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FormDashboard.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormDashboard.cs",
+              "RelativeDocumentMoniker": "view\\FormDashboard.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\PBO Network Programming\\SmartKos\\view\\FormDashboard.cs [Design]",
+              "RelativeToolTip": "..\\..\\PBO Network Programming\\SmartKos\\view\\FormDashboard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T04:55:32.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T04:17:17.765Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormLogin.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormLogin.cs",
+              "RelativeDocumentMoniker": "view\\FormLogin.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormLogin.cs",
+              "RelativeToolTip": "view\\FormLogin.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAewDsAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T04:17:08.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormLogin.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormLogin.cs",
+              "RelativeDocumentMoniker": "view\\FormLogin.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\view\\FormLogin.cs [Design]",
+              "RelativeToolTip": "view\\FormLogin.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T04:07:29.883Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ExcelService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\lib\\ExcelService.cs",
+              "RelativeDocumentMoniker": "lib\\ExcelService.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\lib\\ExcelService.cs",
+              "RelativeToolTip": "lib\\ExcelService.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwAYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T04:01:50.341Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "M_kamar.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\model\\M_kamar.cs",
+              "RelativeDocumentMoniker": "model\\M_kamar.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\model\\M_kamar.cs",
+              "RelativeToolTip": "model\\M_kamar.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T03:58:09.719Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Kamar.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\Kamar.cs",
+              "RelativeDocumentMoniker": "controller\\Kamar.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\Kamar.cs",
+              "RelativeToolTip": "controller\\Kamar.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwBsAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T03:54:06.988Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Koneksi.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\Koneksi.cs",
+              "RelativeDocumentMoniker": "controller\\Koneksi.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\controller\\Koneksi.cs",
+              "RelativeToolTip": "controller\\Koneksi.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T03:52:53.229Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\SmartKos\\SmartKos\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\PBO Network Programming\\SmartKos\\Form1.cs [Design]",
+              "RelativeToolTip": "..\\..\\PBO Network Programming\\SmartKos\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-11T03:35:42.208Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
