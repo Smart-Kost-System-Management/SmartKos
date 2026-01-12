@@ -119,10 +119,10 @@
   <ItemGroup>
     <Compile Include="controller\Kamar.cs" />
     <Compile Include="controller\Koneksi.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="view\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="view\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="lib\ExcelService.cs" />
@@ -141,6 +141,12 @@
     <Compile Include="view\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\ParentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\ParentForm.Designer.cs">
+      <DependentUpon>ParentForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\ParentForm.resx">
+      <DependentUpon>ParentForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

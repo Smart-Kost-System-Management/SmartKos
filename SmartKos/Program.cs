@@ -16,7 +16,7 @@ namespace SmartKos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new view.FormLogin());
+            Application.Run(new view.ParentForm());
         }
     }
 }

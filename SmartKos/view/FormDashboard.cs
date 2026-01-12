@@ -17,6 +17,7 @@ namespace SmartKos.view
     {
         private Kamar kamarCtrl;
         private ExcelService excelSvc;
+        private string selectedKamarID = "";
         public FormDashboard()
         {
             InitializeComponent();
@@ -26,8 +27,29 @@ namespace SmartKos.view
 
         private void FormDashboard_Load(object sender, EventArgs e)
         {
-            LoadDataVisual();
-            LoadDataGrid();
+            RefreshSemua();
+        }
+
+        private void RefreshSemua()
+        {
+            LoadDataGrid();   // Refresh Tabel
+            LoadDataVisual(); // Refresh Tombol Warna-warni
+            BersihkanInput(); // Reset Textbox
+        }
+
+        private void BersihkanInput()
+        {
+            txtNoKamar.Clear();
+            txtHarga.Clear();
+
+            cmbTipe.SelectedIndex = -1;
+            cmbTipe.Text = "";
+
+            cmbStatus.SelectedIndex = -1;
+            cmbStatus.Text = "";
+
+            selectedKamarID = "";
+            txtNoKamar.Focus();
         }
 
         private void LoadDataGrid()
@@ -80,11 +102,129 @@ namespace SmartKos.view
         {
             LoadDataVisual();
             LoadDataGrid();
+            BersihkanInput();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
         {
             excelSvc.ExportToExcel(dgvData);
+        }
+
+        private void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Ambil data dari baris yang diklik
+                DataGridViewRow row = dgvData.Rows[e.RowIndex];
+
+                // Simpan ID ke variabel global (disembunyikan)
+                selectedKamarID = row.Cells["KamarID"].Value.ToString();
+
+                // Tampilkan data ke Textbox
+                txtNoKamar.Text = row.Cells["NomorKamar"].Value.ToString();
+                cmbTipe.Text = row.Cells["TipeKamar"].Value.ToString();
+
+                // Format harga (hilangkan simbol mata uang jika ada biar bisa diedit angka saja)
+                string hargaStr = row.Cells["Harga"].Value.ToString();
+                txtHarga.Text = System.Text.RegularExpressions.Regex.Replace(hargaStr, "[^0-9]", "");
+
+                cmbStatus.Text = row.Cells["Status"].Value.ToString();
+            }
+        }
+
+        private void btnSimpan_Click(object sender, EventArgs e)
+        {
+            if (txtNoKamar.Text == "" || txtHarga.Text == "")
+            {
+                MessageBox.Show("Data tidak boleh kosong!", "Peringatan");
+                return;
+            }
+
+            M_kamar kmr = new M_kamar();
+            kmr.NomorKamar = txtNoKamar.Text;
+            kmr.TipeKamar = cmbTipe.Text;
+            kmr.Harga = Convert.ToDecimal(txtHarga.Text);
+            kmr.Status = cmbStatus.Text;
+
+            try
+            {
+                kamarCtrl.TambahKamar(kmr);
+                MessageBox.Show("Data Berhasil Disimpan!");
+                RefreshSemua();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnUbah_Click(object sender, EventArgs e)
+        {
+            if (selectedKamarID == "")
+            {
+                MessageBox.Show("Pilih data dari tabel terlebih dahulu!", "Peringatan");
+                return;
+            }
+
+            M_kamar kmr = new M_kamar();
+            kmr.NomorKamar = txtNoKamar.Text;
+            kmr.TipeKamar = cmbTipe.Text;
+            kmr.Harga = Convert.ToDecimal(txtHarga.Text);
+            kmr.Status = cmbStatus.Text;
+
+            try
+            {
+                kamarCtrl.UpdateKamar(kmr, selectedKamarID);
+                MessageBox.Show("Data Berhasil Diubah!");
+                RefreshSemua();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+            if (selectedKamarID == "")
+            {
+                MessageBox.Show("Pilih data yang ingin dihapus!", "Peringatan");
+                return;
+            }
+
+            DialogResult jawab = MessageBox.Show("Yakin ingin menghapus data ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (jawab == DialogResult.Yes)
+            {
+                try
+                {
+                    kamarCtrl.HapusKamar(selectedKamarID);
+                    MessageBox.Show("Data Berhasil Dihapus!");
+                    RefreshSemua();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            BersihkanInput();
+        }
+
+        private void txtCari_TextChanged(object sender, EventArgs e)
+        {
+            if (txtCari.Text == "")
+            {
+                LoadDataGrid(); // Panggil fungsi load standar (SELECT ALL)
+            }
+            else
+            {
+                // Panggil fungsi Cari dari Controller
+                dgvData.DataSource = kamarCtrl.CariKamar(txtCari.Text);
+            }
         }
     }
 }

@@ -49,5 +49,107 @@ namespace SmartKos.controller
             }
             return list;
         }
+
+        // ... (Kode sebelumnya tetap ada, tambahkan di bawahnya)
+
+        public void TambahKamar(M_kamar kamar)
+        {
+            string query = "INSERT INTO Tbl_Kamar (NomorKamar, TipeKamar, Harga, Status) VALUES (@nomor, @tipe, @harga, @status)";
+            try
+            {
+                koneksi.GetConn().Open();
+                MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
+                cmd.Parameters.AddWithValue("@nomor", kamar.NomorKamar);
+                cmd.Parameters.AddWithValue("@tipe", kamar.TipeKamar);
+                cmd.Parameters.AddWithValue("@harga", kamar.Harga);
+                cmd.Parameters.AddWithValue("@status", kamar.Status);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex; // Lempar error ke View agar muncul MessageBox
+            }
+            finally
+            {
+                koneksi.GetConn().Close();
+            }
+        }
+
+        public void UpdateKamar(M_kamar kamar, string id)
+        {
+            string query = "UPDATE Tbl_Kamar SET NomorKamar=@nomor, TipeKamar=@tipe, Harga=@harga, Status=@status WHERE KamarID=@id";
+            try
+            {
+                koneksi.GetConn().Open();
+                MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
+                cmd.Parameters.AddWithValue("@nomor", kamar.NomorKamar);
+                cmd.Parameters.AddWithValue("@tipe", kamar.TipeKamar);
+                cmd.Parameters.AddWithValue("@harga", kamar.Harga);
+                cmd.Parameters.AddWithValue("@status", kamar.Status);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                koneksi.GetConn().Close();
+            }
+        }
+
+        public void HapusKamar(string id)
+        {
+            string query = "DELETE FROM Tbl_Kamar WHERE KamarID=@id";
+            try
+            {
+                koneksi.GetConn().Open();
+                MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                koneksi.GetConn().Close();
+            }
+        }
+
+        public DataTable CariKamar(string keyword)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                koneksi.GetConn().Open();
+
+                // REVISI QUERY: Tambahkan "OR KamarID..." dan "OR Harga..."
+                // MySQL otomatis mengkonversi angka ke string saat pakai LIKE
+                string query = "SELECT * FROM Tbl_Kamar WHERE " +
+                               "KamarID LIKE @key OR " +       // Cari berdasarkan ID
+                               "NomorKamar LIKE @key OR " +    // Cari berdasarkan No Kamar
+                               "TipeKamar LIKE @key OR " +     // Cari berdasarkan Tipe
+                               "Harga LIKE @key OR " +         // Cari berdasarkan Harga
+                               "Status LIKE @key";             // Cari berdasarkan Status
+
+                MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
+                cmd.Parameters.AddWithValue("@key", "%" + keyword + "%");
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                koneksi.GetConn().Close();
+            }
+            return dt;
+        }
     }
 }
