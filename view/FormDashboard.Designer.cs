@@ -33,9 +33,11 @@
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.cmbStatus = new System.Windows.Forms.ComboBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.txtNomorKamar = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtHarga = new System.Windows.Forms.TextBox();
             this.cmbTipe = new System.Windows.Forms.ComboBox();
@@ -283,11 +285,44 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // cmbStatus
+            // 
+            this.cmbStatus.FormattingEnabled = true;
+            this.cmbStatus.Items.AddRange(new object[] {
+            "Terisi",
+            "Kosong",
+            "Maintenance"});
+            this.cmbStatus.Location = new System.Drawing.Point(549, 406);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Size = new System.Drawing.Size(130, 24);
+            this.cmbStatus.TabIndex = 5;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(700, 400);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(120, 35);
+            this.btnUpdate.TabIndex = 6;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // txtNomorKamar
+            // 
+            this.txtNomorKamar.Location = new System.Drawing.Point(285, 406);
+            this.txtNomorKamar.Name = "txtNomorKamar";
+            this.txtNomorKamar.Size = new System.Drawing.Size(120, 22);
+            this.txtNomorKamar.TabIndex = 7;
+            this.txtNomorKamar.TextChanged += new System.EventHandler(this.txtKamarID_TextChanged);
+            // 
             // FormDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 810);
+            this.Controls.Add(this.txtNomorKamar);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.cmbStatus);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
@@ -316,6 +351,9 @@
         private System.Windows.Forms.Panel pnlKamar;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.ComboBox cmbStatus;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.TextBox txtNomorKamar;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -327,7 +365,6 @@
         private System.Windows.Forms.TextBox txtNoKamar;
         private System.Windows.Forms.TextBox txtHarga;
         private System.Windows.Forms.ComboBox cmbTipe;
-        private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.Button btnSimpan;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnHapus;

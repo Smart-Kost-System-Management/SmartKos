@@ -120,6 +120,7 @@
     <Compile Include="controller\Kamar.cs" />
     <Compile Include="controller\Koneksi.cs" />
     <Compile Include="controller\MigrationHelper.cs" />
+    <Compile Include="controller\UserController.cs" />
     <Compile Include="view\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

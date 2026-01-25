@@ -99,5 +99,7 @@ namespace SmartKos.view
             regForm.Show();
             this.Hide();
         }
+        }
     }
 }
+

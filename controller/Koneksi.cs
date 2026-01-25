@@ -10,8 +10,7 @@ namespace SmartKos.controller
 {
     internal class Koneksi
     {
-        private string connString = "Server=localhost;Database=smartkos;Uid=root;Pwd=;";
-
+        public static string connString = "server=localhost;port=3306;database=smartkos;uid=root;pwd=;";
         // Perhatikan tipe datanya harus MySqlConnection
         public MySqlConnection conn;
 
