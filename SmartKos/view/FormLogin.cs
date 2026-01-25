@@ -17,6 +17,21 @@ namespace SmartKos.view
         public FormLogin()
         {
             InitializeComponent();
+            UIHelper.SetFormStyle(this);
+            // Gradient Background
+            this.Paint += (s, e) => UIHelper.PaintGradientBackground(this, e.Graphics, UIHelper.BackgroundColor, Color.White);
+
+            UIHelper.StyleLabel(label1, true); // Title
+            UIHelper.StyleButton(btnLogin, true); // Primary
+            UIHelper.StyleButton(button1, false); // Register (Secondary)
+            
+            // Round TextBoxes (workaround as we can't easily set region on textbox directly without cutting text sometimes, 
+            // but let's try or just rely on the flat border style from Helper)
+            // Actually, let's just leave textboxes flat with single border but ensure they have padding if possible.
+            // For now, we focus on the buttons and background.
+            
+            // Adjust spacing if needed
+            label1.Top = 30; // More space at top
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -76,6 +91,13 @@ namespace SmartKos.view
             {
                 MessageBox.Show("Terjadi Kesalahan Database: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            FormRegistrasi regForm = new FormRegistrasi();
+            regForm.Show();
+            this.Hide();
         }
     }
 }

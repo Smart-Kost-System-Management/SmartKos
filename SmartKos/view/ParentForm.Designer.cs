@@ -62,7 +62,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -94,6 +94,7 @@
             this.signUpToolStripMenuItem.Name = "signUpToolStripMenuItem";
             this.signUpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.signUpToolStripMenuItem.Text = "Sign Up";
+            this.signUpToolStripMenuItem.Click += new System.EventHandler(this.signUpToolStripMenuItem_Click);
             // 
             // ParentForm
             // 

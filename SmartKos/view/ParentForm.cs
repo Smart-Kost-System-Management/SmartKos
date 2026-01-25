@@ -36,5 +36,12 @@ namespace SmartKos.view
             FrmLogin.MdiParent = this;
             FrmLogin.Show();
         }
+
+        private void signUpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormRegistrasi formRegistrasi = new FormRegistrasi();
+            formRegistrasi.MdiParent = this;
+            formRegistrasi.Show();
+        }
     }
 }

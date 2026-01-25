@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="controller\Kamar.cs" />
     <Compile Include="controller\Koneksi.cs" />
+    <Compile Include="controller\MigrationHelper.cs" />
     <Compile Include="view\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,12 +142,25 @@
     <Compile Include="view\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\FormRegistrasi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FormRegistrasi.Designer.cs">
+      <DependentUpon>FormRegistrasi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\FormSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FormSplash.Designer.cs">
+      <DependentUpon>FormSplash.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\ParentForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="view\ParentForm.Designer.cs">
       <DependentUpon>ParentForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\UIHelper.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -155,12 +169,19 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="view\FormDashboard.resx">
       <DependentUpon>FormDashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\FormRegistrasi.resx">
+      <DependentUpon>FormRegistrasi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\FormSplash.resx">
+      <DependentUpon>FormSplash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\ParentForm.resx">
       <DependentUpon>ParentForm.cs</DependentUpon>
@@ -179,6 +200,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Kost.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,6 +23,22 @@ namespace SmartKos.view
             InitializeComponent();
             kamarCtrl = new Kamar();
             excelSvc = new ExcelService();
+            
+            // Apply Modern UI
+            UIHelper.SetFormStyle(this);
+            UIHelper.StyleDataGrid(dgvData);
+            
+            // Custom button styling
+            UIHelper.StyleButton(btnSimpan, true); // Primary
+            UIHelper.StyleButton(btnRefresh, false); 
+            UIHelper.StyleButton(btnExport, false); 
+            btnExport.BackColor = UIHelper.SuccessColor; // Green for Excel
+            
+            // Header Title
+            UIHelper.StyleLabel(label1, true);
+
+            // Gradient Background
+            this.Paint += (s, e) => UIHelper.PaintGradientBackground(this, e.Graphics, UIHelper.BackgroundColor, Color.White);
         }
 
         private void FormDashboard_Load(object sender, EventArgs e)
@@ -72,13 +88,23 @@ namespace SmartKos.view
                 btn.Text = "KMR " + item.NomorKamar + "\n" + item.Status;
                 btn.Size = new Size(100, 100);
                 btn.Location = new Point(x, y);
-                btn.FlatStyle = FlatStyle.Flat;
-                btn.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                btn.ForeColor = Color.White;
-
+                
+                // Use Helper for base style
+                UIHelper.StyleButton(btn, false); 
+                btn.Height = 100; // Restore height
+                
+                // FORCE ROUNDED REGION on these dynamic buttons
+                // Need to do this AFTER adding to control or ensuring size, but Helper StyleButton attaches Resize event which handles it.
+                // However, we need to make sure the resize event triggers or we call it manually if size doesn't change from default (40) to 100 yet.
+                // Actually StyleButton sets size to 45. We set to 100 right after.
+                // The Resize event inside StyleButton will catch the Height change to 100? No, setting Height triggers Resize.
+                // So it should work automatically!
+                
                 // Logika Warna (Syarat UI Menarik)
-                if (item.Status == "Kosong") btn.BackColor = Color.SeaGreen;
-                else btn.BackColor = Color.Crimson;
+                if (item.Status == "Kosong") btn.BackColor = UIHelper.SuccessColor;
+                else btn.BackColor = UIHelper.DangerColor;
+                
+                // Fix text color if background is light/dark, but here we used strong colors so White is fine which Helper sets.
 
                 // Event Klik (Optional: Tampilkan Detail)
                 btn.Click += (s, ev) => { MessageBox.Show("Ini Kamar " + item.NomorKamar); };

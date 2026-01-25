@@ -25,7 +25,10 @@ namespace SmartKos.controller
             {
                 koneksi.GetConn().Open();
                 // Gunakan MySqlCommand dan MySqlDataAdapter
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Tbl_Kamar", koneksi.GetConn());
+                string query = "SELECT k.KamarID, k.NomorKamar, t.NamaTipe as TipeKamar, k.Harga, k.Status " +
+                               "FROM Tbl_Kamar k " +
+                               "JOIN Tbl_TipeKamar t ON k.TipeID = t.TipeID";
+                MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
             }
@@ -54,7 +57,8 @@ namespace SmartKos.controller
 
         public void TambahKamar(M_kamar kamar)
         {
-            string query = "INSERT INTO Tbl_Kamar (NomorKamar, TipeKamar, Harga, Status) VALUES (@nomor, @tipe, @harga, @status)";
+            string query = "INSERT INTO Tbl_Kamar (NomorKamar, TipeID, Harga, Status) " +
+                           "VALUES (@nomor, (SELECT TipeID FROM Tbl_TipeKamar WHERE NamaTipe = @tipe), @harga, @status)";
             try
             {
                 koneksi.GetConn().Open();
@@ -77,7 +81,9 @@ namespace SmartKos.controller
 
         public void UpdateKamar(M_kamar kamar, string id)
         {
-            string query = "UPDATE Tbl_Kamar SET NomorKamar=@nomor, TipeKamar=@tipe, Harga=@harga, Status=@status WHERE KamarID=@id";
+            string query = "UPDATE Tbl_Kamar SET NomorKamar=@nomor, " +
+                           "TipeID=(SELECT TipeID FROM Tbl_TipeKamar WHERE NamaTipe = @tipe), " +
+                           "Harga=@harga, Status=@status WHERE KamarID=@id";
             try
             {
                 koneksi.GetConn().Open();
@@ -128,12 +134,15 @@ namespace SmartKos.controller
 
                 // REVISI QUERY: Tambahkan "OR KamarID..." dan "OR Harga..."
                 // MySQL otomatis mengkonversi angka ke string saat pakai LIKE
-                string query = "SELECT * FROM Tbl_Kamar WHERE " +
-                               "KamarID LIKE @key OR " +       // Cari berdasarkan ID
-                               "NomorKamar LIKE @key OR " +    // Cari berdasarkan No Kamar
-                               "TipeKamar LIKE @key OR " +     // Cari berdasarkan Tipe
-                               "Harga LIKE @key OR " +         // Cari berdasarkan Harga
-                               "Status LIKE @key";             // Cari berdasarkan Status
+                string query = "SELECT k.KamarID, k.NomorKamar, t.NamaTipe as TipeKamar, k.Harga, k.Status " +
+                               "FROM Tbl_Kamar k " +
+                               "JOIN Tbl_TipeKamar t ON k.TipeID = t.TipeID " +
+                               "WHERE " +
+                               "k.KamarID LIKE @key OR " +       // Cari berdasarkan ID
+                               "k.NomorKamar LIKE @key OR " +    // Cari berdasarkan No Kamar
+                               "t.NamaTipe LIKE @key OR " +      // Cari berdasarkan Tipe
+                               "k.Harga LIKE @key OR " +         // Cari berdasarkan Harga
+                               "k.Status LIKE @key";             // Cari berdasarkan Status
 
                 MySqlCommand cmd = new MySqlCommand(query, koneksi.GetConn());
                 cmd.Parameters.AddWithValue("@key", "%" + keyword + "%");

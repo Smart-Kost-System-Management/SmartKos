@@ -16,7 +16,12 @@ namespace SmartKos
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new view.ParentForm());
+
+            // PENTING: Jangan dihapus! Ini fungsi untuk memperbaiki database otomatis
+            // agar error "Table doesn't exist" hilang.
+            controller.MigrationHelper.CheckAndApplyMigration();
+
+            Application.Run(new view.FormSplash());
         }
     }
 }
