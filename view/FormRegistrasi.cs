@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using SmartKos.controller;
 using SmartKos.view;
 
 namespace SmartKos.view
@@ -32,8 +31,6 @@ namespace SmartKos.view
             
             // Custom styling for specific controls if needed
             groupBox1.ForeColor = UIHelper.PrimaryColor; // Make GroupBox title blue
-        }
-
         }
 
         private void btnSimpan_Click(object sender, EventArgs e)
@@ -63,15 +60,11 @@ namespace SmartKos.view
         private void groupBox1_Enter(object sender, EventArgs e)
         {
         }
-        }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             FormLogin loginForm = new FormLogin();
             loginForm.Show();
-            this.Close();
-        }
-        {
             this.Close();
         }
     }
