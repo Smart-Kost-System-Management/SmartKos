@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,56 +16,64 @@ namespace SmartKos.view
 {
     public partial class FormDashboard : Form
     {
-        // TAMBAHKAN BARIS INI: Untuk menyimpan ID kamar yang dipilih dari tabel
         private Kamar kamarCtrl;
         private ExcelService excelSvc;
+
         public FormDashboard()
         {
             InitializeComponent();
-
-            // HANYA GUNAKAN SATU BARIS INI UNTUK INISIALISASI
-            kamarCtrl = new SmartKos.controller.Kamar();
+            kamarCtrl = new Kamar();
             excelSvc = new ExcelService();
+
+            // Apply Styling
+            UIHelper.SetFormStyle(this);
+            UIHelper.StyleDataGrid(dgvData);
+            UIHelper.StyleButton(btnSimpan, true);
+            UIHelper.StyleButton(btnUbah, false);
+            UIHelper.StyleButton(btnHapus, false);
+            UIHelper.StyleButton(btnClear, false);
+            UIHelper.StyleButton(btnRefresh, false);
+            UIHelper.StyleButton(btnExport, false);
+            btnExport.BackColor = UIHelper.SuccessColor;
+
+            // Load items into Status ComboBox
             cmbStatus.Items.Clear();
             cmbStatus.Items.AddRange(new string[] { "Terisi", "Kosong", "Maintenance" });
         }
 
         private void FormDashboard_Load(object sender, EventArgs e)
         {
-            // Inisialisasi controller agar tidak NullReferenceException
-            kamarCtrl = new SmartKos.controller.Kamar();
+            RefreshSemua();
+        }
 
-            LoadDataGrid();   // Isi tabel user
-            LoadDataVisual(); // ISI MONITORING KAMAR   
-
-            cmbStatus.Items.Clear();
-            cmbStatus.Items.Add("Terisi");
-            cmbStatus.Items.Add("Kosong");
-            cmbStatus.Items.Add("Maintenance");
-
+        private void RefreshSemua()
+        {
+            LoadDataGrid();
+            LoadDataVisual();
+            BersihkanInput();
         }
 
         private void LoadDataGrid()
         {
-            // Mengisi DataGrid dengan hasil query dari Kamar.cs
             dgvData.DataSource = kamarCtrl.TampilSemuaKamar();
-
-            // Opsional: Mempercantik judul kolom di tampilan
+            
             if (dgvData.Columns.Count > 0)
             {
-                dgvData.Columns["NomorKamar"].HeaderText = "No. Kamar";
-                dgvData.Columns["TipeKamar"].HeaderText = "Tipe Kamar";
-                dgvData.Columns["Harga"].HeaderText = "Harga (Rp)";
-                dgvData.Columns["Status"].HeaderText = "Status";
+                if (dgvData.Columns.Contains("KamarID")) dgvData.Columns["KamarID"].Visible = false;
+                if (dgvData.Columns.Contains("NomorKamar")) dgvData.Columns["NomorKamar"].HeaderText = "No. Kamar";
+                if (dgvData.Columns.Contains("TipeKamar")) dgvData.Columns["TipeKamar"].HeaderText = "Tipe Kamar";
+                if (dgvData.Columns.Contains("Harga")) dgvData.Columns["Harga"].HeaderText = "Harga (Rp)";
+                if (dgvData.Columns.Contains("Status")) dgvData.Columns["Status"].HeaderText = "Status";
             }
         }
 
         private void LoadDataVisual()
         {
-            pnlKamar.Controls.Clear(); // Bersihkan panel agar tidak menumpuk
-            List<M_kamar> list = kamarCtrl.GetStatusKamar(); // Ambil data dari Kamar.cs
+            pnlKamar.Controls.Clear();
+            List<M_kamar> list = kamarCtrl.GetStatusKamar();
 
             int x = 10, y = 10;
+            int counter = 0;
             foreach (var item in list)
             {
                 Button btn = new Button();
@@ -74,36 +81,50 @@ namespace SmartKos.view
                 btn.Size = new Size(100, 100);
                 btn.Location = new Point(x, y);
 
-                // Memberi warna berdasarkan status dari database
-                if (item.Status == "Terisi")
-                    btn.BackColor = Color.Red;
-                else if (item.Status == "Kosong")
-                    btn.BackColor = Color.LightGreen;
-                else
-                    btn.BackColor = Color.Orange;
+                UIHelper.StyleButton(btn, false);
+                btn.Height = 100;
 
-                // Tambahkan event klik agar data pindah ke TextBox saat kotak diklik
+                if (item.Status == "Terisi")
+                    btn.BackColor = UIHelper.DangerColor;
+                else if (item.Status == "Kosong")
+                    btn.BackColor = UIHelper.SuccessColor;
+                else
+                    btn.BackColor = UIHelper.WarningColor;
+
                 btn.Click += (s, ev) => {
-                    txtNomorKamar.Text = item.NomorKamar;
+                    txtNoKamar.Text = item.NomorKamar;
                     cmbStatus.Text = item.Status;
+                    // Try to select in Grid too if possible
+                    foreach (DataGridViewRow row in dgvData.Rows)
+                    {
+                        if (row.Cells["NomorKamar"].Value?.ToString() == item.NomorKamar)
+                        {
+                            row.Selected = true;
+                            dgvData_CellClick(null, new DataGridViewCellEventArgs(0, row.Index));
+                            break;
+                        }
+                    }
                 };
 
                 pnlKamar.Controls.Add(btn);
                 x += 110;
-                if (x > pnlKamar.Width - 100) { x = 10; y += 110; }
+                counter++;
+                if (counter >= 7) { x = 10; y += 110; counter = 0; }
             }
-            
         }
 
-        private void FormDashboard_FormClosed(object sender, FormClosedEventArgs e)
+        private void BersihkanInput()
         {
-            Application.Exit();
+            txtNoKamar.Clear();
+            txtHarga.Clear();
+            cmbTipe.SelectedIndex = -1;
+            cmbStatus.SelectedIndex = -1;
+            txtNoKamar.Focus();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            LoadDataVisual();
-            LoadDataGrid();
+            RefreshSemua();
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -111,90 +132,74 @@ namespace SmartKos.view
             excelSvc.ExportToExcel(dgvData);
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
-            string nomor = txtNomorKamar.Text; // Misal diisi 105
-            string status = cmbStatus.Text;
+            BersihkanInput();
+        }
 
-            if (string.IsNullOrEmpty(nomor))
+        private void btnHapus_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNoKamar.Text))
             {
-                MessageBox.Show("Masukkan Nomor Kamar!");
+                MessageBox.Show("Pilih data yang akan dihapus!");
                 return;
             }
 
-            // Cek apakah nomor kamar 105 sudah ada di database
-            if (kamarCtrl.CekKamarEksis(nomor))
+            if (MessageBox.Show("Hapus kamar " + txtNoKamar.Text + "?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // JIKA ADA: Jalankan Update Status
-                kamarCtrl.UpdateStatusKamar(nomor, status, null);
-                MessageBox.Show("Status Kamar " + nomor + " Berhasil Diperbarui!");
-            }
-            else
-            {
-                // JIKA TIDAK ADA: Tambahkan sebagai kamar baru agar muncul di monitoring
-                if (kamarCtrl.TambahKamarBaru(nomor, status))
+                if (kamarCtrl.HapusKamar(txtNoKamar.Text))
                 {
-                    MessageBox.Show("Kamar Baru " + nomor + " Berhasil Ditambahkan ke Monitoring!");
+                    MessageBox.Show("Data berhasil dihapus!");
+                    RefreshSemua();
                 }
             }
-
-            // REFRESH TAMPILAN agar kotak 105 langsung muncul
-            LoadDataGrid();   // Update tabel bawah
-            LoadDataVisual(); // Gambar ulang kotak-kotak monitoring
         }
 
-        private void txtKamarID_TextChanged(object sender, EventArgs e)
+        private void btnSimpan_Click(object sender, EventArgs e)
         {
-
-        }
-
-        public List<M_kamar> GetDataKamar()
-        {
-            List<M_kamar> list = new List<M_kamar>();
-            // ... isi logika SELECT * FROM tbl_kamar ...
-            return list;
-        }
-
-        public List<M_kamar> GetStatusKamar()
-        {
-            List<M_kamar> list = new List<M_kamar>();
-
-            // Gunakan nama tabel sesuai di database kamu (tbl_kamar)
-            string query = "SELECT nomor_kamar, status FROM tbl_kamar";
-
-            try
+            if (string.IsNullOrEmpty(txtNoKamar.Text) || cmbTipe.SelectedIndex == -1 || string.IsNullOrEmpty(txtHarga.Text))
             {
-                using (MySqlConnection conn = new MySqlConnection(Koneksi.connString))
-                {
-                    conn.Open(); // Buka koneksi terlebih dahulu
-
-                    // Perbaikan: Gunakan MySqlCommand untuk menjalankan query
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        // Perbaikan: Gunakan MySqlDataReader untuk membaca hasil query
-                        using (MySqlDataReader rd = cmd.ExecuteReader())
-                        {
-                            while (rd.Read())
-                            {
-                                list.Add(new M_kamar
-                                {
-                                    // Pastikan properti ini ada di model M_kamar.cs
-                                    NomorKamar = rd["nomor_kamar"].ToString(),
-                                    Status = rd["status"].ToString()
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show("Terjadi Kesalahan: " + ex.Message);
+                MessageBox.Show("Data belum lengkap!", "Peringatan");
+                return;
             }
 
-            return list;
+            if (kamarCtrl.TambahKamar(txtNoKamar.Text, cmbTipe.Text, txtHarga.Text, cmbStatus.Text))
+            {
+                MessageBox.Show("Data berhasil disimpan!");
+                RefreshSemua();
+            }
+        }
 
+        private void btnUbah_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtNoKamar.Text))
+            {
+                MessageBox.Show("Pilih data yang akan diubah!");
+                return;
+            }
+
+            if (kamarCtrl.UpdateStatusKamar(txtNoKamar.Text, cmbStatus.Text, cmbTipe.Text, txtHarga.Text))
+            {
+                MessageBox.Show("Data berhasil diupdate!");
+                RefreshSemua();
+            }
+        }
+
+        private void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvData.Rows[e.RowIndex];
+                txtNoKamar.Text = row.Cells["NomorKamar"].Value?.ToString();
+                cmbTipe.Text = row.Cells["TipeKamar"].Value?.ToString();
+                txtHarga.Text = row.Cells["Harga"].Value?.ToString();
+                cmbStatus.Text = row.Cells["Status"].Value?.ToString();
+            }
+        }
+
+        private void txtCari_TextChanged(object sender, EventArgs e)
+        {
+            dgvData.DataSource = kamarCtrl.CariKamar(txtCari.Text);
         }
     }
-    
 }
