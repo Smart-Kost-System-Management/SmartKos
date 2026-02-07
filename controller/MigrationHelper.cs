@@ -47,6 +47,63 @@ namespace SmartKos.controller
                         ExecuteQuery("ALTER TABLE Tbl_Kamar DROP COLUMN TipeKamar", conn);
                     }
                 }
+
+                // 4. Cek Tabel Penghuni
+                if (!CheckIfTableExists("Tbl_Penghuni", conn))
+                {
+                    string queryCreate = @"CREATE TABLE Tbl_Penghuni (
+                        PenghuniID INT AUTO_INCREMENT PRIMARY KEY, 
+                        Nama VARCHAR(100) NOT NULL,
+                        NoKTP VARCHAR(20) NOT NULL,
+                        NoHP VARCHAR(20) NOT NULL,
+                        KamarID INT,
+                        TanggalMasuk DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (KamarID) REFERENCES Tbl_Kamar(KamarID)
+                    )";
+                    ExecuteQuery(queryCreate, conn);
+                }
+
+                // 5. Cek Tabel Pembayaran
+                if (!CheckIfTableExists("Tbl_Pembayaran", conn))
+                {
+                    string queryCreate = @"CREATE TABLE Tbl_Pembayaran (
+                        PembayaranID INT AUTO_INCREMENT PRIMARY KEY, 
+                        PenghuniID INT NOT NULL,
+                        Jumlah DECIMAL(18,2) NOT NULL,
+                        TanggalBayar DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        Statuses VARCHAR(20) DEFAULT 'Lunas',
+                        FOREIGN KEY (PenghuniID) REFERENCES Tbl_Penghuni(PenghuniID)
+                    )";
+                    ExecuteQuery(queryCreate, conn);
+                }
+
+                // 6. Cek Tabel Booking (NEW)
+                if (!CheckIfTableExists("Tbl_Booking", conn))
+                {
+                    string queryCreate = @"CREATE TABLE Tbl_Booking (
+                        BookingID INT AUTO_INCREMENT PRIMARY KEY,
+                        UserID INT NOT NULL,
+                        KamarID INT NOT NULL,
+                        TanggalBooking DATETIME DEFAULT CURRENT_TIMESTAMP,
+                        Status VARCHAR(20) DEFAULT 'Pending',
+                        Nama VARCHAR(100),
+                        NoKTP VARCHAR(20),
+                        NoHP VARCHAR(20),
+                        FOREIGN KEY (UserID) REFERENCES tbl_user(UserID),
+                        FOREIGN KEY (KamarID) REFERENCES Tbl_Kamar(KamarID)
+                    )";
+                    ExecuteQuery(queryCreate, conn);
+                }
+                else
+                {
+                    // Update Schema if table exists but columns missing (For existing DB)
+                    if (!CheckIfColumnExists("Tbl_Booking", "Nama", conn))
+                        ExecuteQuery("ALTER TABLE Tbl_Booking ADD COLUMN Nama VARCHAR(100)", conn);
+                    if (!CheckIfColumnExists("Tbl_Booking", "NoKTP", conn))
+                        ExecuteQuery("ALTER TABLE Tbl_Booking ADD COLUMN NoKTP VARCHAR(20)", conn);
+                    if (!CheckIfColumnExists("Tbl_Booking", "NoHP", conn))
+                        ExecuteQuery("ALTER TABLE Tbl_Booking ADD COLUMN NoHP VARCHAR(20)", conn);
+                }
             }
             catch (Exception ex)
             {

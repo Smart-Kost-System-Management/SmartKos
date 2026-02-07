@@ -21,6 +21,13 @@ namespace SmartKos
             // agar error "Table doesn't exist" hilang.
             controller.MigrationHelper.CheckAndApplyMigration();
 
+            // Run Unit Tests (Manual Quality Check)
+            try { 
+                SmartKos.Test.UnitTest.RunTests(); 
+            } catch(Exception ex) { 
+                MessageBox.Show("Unit Test Failed: " + ex.Message); 
+            }
+
             Application.Run(new view.FormSplash());
         }
     }

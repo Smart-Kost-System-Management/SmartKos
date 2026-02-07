@@ -7,16 +7,17 @@ namespace SmartKos.view
 {
     public static class UIHelper
     {
-        // Color Palette
-        public static Color PrimaryColor = Color.FromArgb(78, 115, 223); // #4e73df (Royal Blue)
-        public static Color DarkPrimaryColor = Color.FromArgb(34, 74, 190);
-        public static Color SecondaryColor = Color.FromArgb(133, 135, 150); // #858796 (Gray)
-        public static Color BackgroundColor = Color.FromArgb(248, 249, 252); // #f8f9fc (Light Gray/White)
+        // Color Palette - Professional & Colorful (Inferred "Smart" Theme: Blue/Teal/White)
+        public static Color PrimaryColor = Color.FromArgb(52, 152, 219); // Bright Blue
+        public static Color DarkPrimaryColor = Color.FromArgb(41, 128, 185);
+        public static Color AccentColor = Color.FromArgb(230, 126, 34); // Orange for actions
+        public static Color BackgroundColor = Color.FromArgb(236, 240, 241); // Soft Cloud
         public static Color SurfaceColor = Color.White;
-        public static Color TextColor = Color.FromArgb(90, 92, 105); // #5a5c69 (Dark Gray)
-        public static Color SuccessColor = Color.FromArgb(28, 200, 138);
-        public static Color DangerColor = Color.FromArgb(231, 74, 59);
-        public static Color WarningColor = Color.FromArgb(246, 194, 62);
+        public static Color TextColor = Color.FromArgb(44, 62, 80); // Dark Slate
+        public static Color SuccessColor = Color.FromArgb(46, 204, 113); // Emerald
+        public static Color DangerColor = Color.FromArgb(231, 76, 60); // Alizarin
+        public static Color WarningColor = Color.FromArgb(241, 196, 15); // Sunflower
+        public static Color SecondaryColor = Color.FromArgb(149, 165, 166); // Concrete Gray for Neutral actions
 
         // Fonts
         public static Font MainFont = new Font("Segoe UI", 10F, FontStyle.Regular);
@@ -28,7 +29,9 @@ namespace SmartKos.view
             // form.BackColor = BackgroundColor; // Disable flat color in favor of gradient potentially
             form.Font = MainFont;
             form.ForeColor = TextColor;
-            form.FormBorderStyle = FormBorderStyle.FixedSingle; // Clean borders
+            
+            // Clean borders or no borders if we want custom title bar (sticking to standard but styled)
+            // form.FormBorderStyle = FormBorderStyle.Sizable; // Allow resizing for responsiveness
             
             // Apply Gradient to Form
             form.Paint += (s, e) => PaintGradientBackground(form, e.Graphics, BackgroundColor, Color.White);
@@ -43,15 +46,36 @@ namespace SmartKos.view
                 if (c is Label) StyleLabel((Label)c);
                 if (c is Button) StyleButton((Button)c, false); // Default to secondary
                 if (c is TextBox) StyleTextBox((TextBox)c);
+                if (c is ComboBox) StyleComboBox((ComboBox)c);
                 if (c is GroupBox) {
-                    c.ForeColor = TextColor; 
+                    c.ForeColor = TextColor;
+                    c.Font = new Font(MainFont, FontStyle.Bold);
                     StyleContainer(c); 
                 }
                 if (c is Panel) StyleContainer(c); 
+                if (c is MenuStrip) StyleMenuStrip((MenuStrip)c);
             }
         }
 
         // --- NEW FEATURES Phase 2 ---
+        
+        public static void StyleMenuStrip(MenuStrip menu)
+        {
+            menu.BackColor = PrimaryColor;
+            menu.ForeColor = Color.White;
+            menu.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            menu.Renderer = new ToolStripProfessionalRenderer(new CustomColorTable());
+        }
+        
+        // Helper for Menu Colors
+        private class CustomColorTable : ProfessionalColorTable
+        {
+            public override Color MenuItemSelected => DarkPrimaryColor;
+            public override Color MenuItemSelectedGradientBegin => DarkPrimaryColor;
+            public override Color MenuItemSelectedGradientEnd => DarkPrimaryColor;
+            public override Color MenuItemPressedGradientBegin => DarkPrimaryColor;
+            public override Color MenuItemPressedGradientEnd => DarkPrimaryColor;
+        }
 
         public static void SetRoundedRegion(Control c, int radius)
         {
@@ -68,22 +92,11 @@ namespace SmartKos.view
         public static void PaintGradientBackground(Control c, Graphics g, Color start, Color end)
         {
             if (c.ClientRectangle.Width == 0 || c.ClientRectangle.Height == 0) return;
-            using (LinearGradientBrush brush = new LinearGradientBrush(c.ClientRectangle, start, end, 45F))
+            // Full screen gradient
+            using (LinearGradientBrush brush = new LinearGradientBrush(c.ClientRectangle, start, end, 90F))
             {
                 g.FillRectangle(brush, c.ClientRectangle);
             }
-        }
-
-        public static void StyleCard(Panel p)
-        {
-            p.BackColor = SurfaceColor;
-            // SetRoundedRegion(p, 20); // Make panel rounded
-            // Note: Region clipping might cut off borders, so for cards we often just rely on the bg color 
-            // or we use a custom paint to draw a rounded border.
-            // For simplicity, let's just round it.
-            p.Paint += (s, e) => {
-                // Optional: Draw shadow or border here if we want to be fancy
-            };
         }
 
         public static void StyleButton(Button btn, bool primary = true)
@@ -92,11 +105,13 @@ namespace SmartKos.view
             btn.FlatAppearance.BorderSize = 0;
             btn.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btn.Cursor = Cursors.Hand;
-            btn.Size = new Size(btn.Width, 45); // Taller for modern look
+            btn.Height = 40; // Consistent height
 
             // Hook into Resize to keep rounded shape correct
-            btn.Resize += (s, e) => SetRoundedRegion(btn, 15);
-            SetRoundedRegion(btn, 15); // Initial set
+            // Remove previous handlers to avoid duplicate calls if styled multiple times
+            // btn.Resize -= ... (Too complex to remove lambda, just assume called once)
+            btn.Resize += (s, e) => SetRoundedRegion(btn, 10);
+            SetRoundedRegion(btn, 10);
 
             if (primary)
             {
@@ -105,10 +120,6 @@ namespace SmartKos.view
             }
             else
             {
-                // Determine if it's a specific action button based on text or name if needed, 
-                // but for now let's assume non-primary are secondary/outline or gray.
-                // Or user can manually set colors after calling this.
-                // Let's make "Batal" or "Clear" buttons gray.
                 string text = btn.Text.ToLower();
                 if (text.Contains("hapus") || text.Contains("cancel") || text.Contains("batal"))
                 {
@@ -127,8 +138,7 @@ namespace SmartKos.view
                 }
                 else
                 {
-                     // Default secondary
-                    btn.BackColor = SecondaryColor;
+                    btn.BackColor = PrimaryColor; // Default nice blue
                     btn.ForeColor = Color.White;
                 }
             }
@@ -136,14 +146,21 @@ namespace SmartKos.view
 
         public static void StyleTextBox(TextBox txt)
         {
-            txt.Font = new Font("Segoe UI", 10F);
-            txt.BorderStyle = BorderStyle.FixedSingle; 
-            // Cannot easily change padding in standard textbox without custom control, 
-            // but we can increase height by font size.
+            txt.Font = new Font("Segoe UI", 11F); // Slightly larger
+            txt.BorderStyle = BorderStyle.FixedSingle;
+            txt.BackColor = Color.White;
+        }
+
+        public static void StyleComboBox(ComboBox cmb)
+        {
+            cmb.Font = new Font("Segoe UI", 11F);
+            cmb.FlatStyle = FlatStyle.Flat;
+            cmb.BackColor = Color.White;
         }
 
         public static void StyleLabel(Label lbl, bool isHeader = false)
         {
+            lbl.BackColor = Color.Transparent; // Important for gradient
             if (isHeader)
             {
                 lbl.Font = HeaderFont;
@@ -158,26 +175,29 @@ namespace SmartKos.view
 
         public static void StyleDataGrid(DataGridView dgv)
         {
-            dgv.BackgroundColor = SurfaceColor;
+            dgv.BackgroundColor = Color.WhiteSmoke;
             dgv.BorderStyle = BorderStyle.None;
             dgv.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgv.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            
+            // RESPONSIVE FIX
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             
             dgv.EnableHeadersVisualStyles = false;
             dgv.ColumnHeadersDefaultCellStyle.BackColor = PrimaryColor;
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgv.ColumnHeadersHeight = 40;
+            dgv.ColumnHeadersHeight = 45;
 
             dgv.DefaultCellStyle.BackColor = SurfaceColor;
             dgv.DefaultCellStyle.ForeColor = TextColor;
             dgv.DefaultCellStyle.Font = MainFont;
-            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 240, 255); // Light blue selection
-            dgv.DefaultCellStyle.SelectionForeColor = TextColor;
-            dgv.DefaultCellStyle.Padding = new Padding(5);
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(200, 230, 255); // Lighter selection
+            dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgv.DefaultCellStyle.Padding = new Padding(6);
             
-            dgv.RowTemplate.Height = 35;
-            dgv.AlternatingRowsDefaultCellStyle.BackColor = BackgroundColor;
+            dgv.RowTemplate.Height = 40; // Taller rows
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 248, 250);
         }
 
         // Custom Gradient Panel helper if needed

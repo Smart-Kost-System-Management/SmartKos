@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace SmartKos.controller
 {
-    internal class Koneksi
+    public class Koneksi
     {
         public static string connString = "server=localhost;port=3306;database=smartkos;uid=root;pwd=;";
         // Perhatikan tipe datanya harus MySqlConnection
